@@ -23,6 +23,6 @@ export const questions: Question[] = [
     type: 'TEXT',
     id: 3,
     question: 'Вопрос 3',
-    answers: ['Вариант 1', 'Вариант 2', 'Вариант 3'],
+    answers: ['Введите ответ'],
   },
 ]
