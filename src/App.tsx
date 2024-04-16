@@ -14,15 +14,13 @@ import { getActiveStep } from './store/selectors/stepperSelector'
 import { setActiveStep } from './store/reducers/stepperReducer'
 import { questions } from './mokData'
 import { FormProvider, useForm } from 'react-hook-form'
+import { QuestionCard } from './components/QuestionCard'
 
 export const App = () => {
-  const user = useAppSelector(getUser)
   const activeStep = useAppSelector(getActiveStep)
   const dispatch = useAppDispatch()
   const methods = useForm()
-
   const { handleSubmit } = methods
-  const currentQuestion = questions[activeStep]
 
   const handleSetUser = () => {
     dispatch(setActiveStep({ activeStep: activeStep + 1 }))
@@ -39,24 +37,7 @@ export const App = () => {
             />
           </Grid>
           <Grid item>
-            <Card sx={{ minWidth: 275 }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {currentQuestion.question}
-                </Typography>
-
-                {currentQuestion.answers.map((answer) => (
-                  <Typography
-                    key={answer}
-                    sx={{ fontSize: 14 }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {answer}
-                  </Typography>
-                ))}
-              </CardContent>
-            </Card>
+            <QuestionCard />
           </Grid>
 
           <Grid item>
