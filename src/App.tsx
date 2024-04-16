@@ -22,8 +22,9 @@ export const App = () => {
   const methods = useForm()
   const { handleSubmit } = methods
 
-  const handleSetUser = () => {
+  const handleSetUser = (formData: any) => {
     dispatch(setActiveStep({ activeStep: activeStep + 1 }))
+    console.log(formData)
   }
 
   return (
