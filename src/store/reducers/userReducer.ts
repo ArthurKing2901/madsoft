@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type UserType = {
   name: string
-  age: number
+  surname: string
+  email: string
 }
 
 export const initialUserState: UserType = {
-  name: 'John',
-  age: 30,
+  name: '',
+  surname: '',
+  email: '',
 }
 
 export const userReducer = createSlice({
@@ -16,7 +18,8 @@ export const userReducer = createSlice({
   reducers: {
     setUser(state: UserType, action: PayloadAction<UserType>) {
       state.name = action.payload.name
-      state.age = action.payload.age
+      state.surname = action.payload.surname
+      state.email = action.payload.email
     },
   },
 })

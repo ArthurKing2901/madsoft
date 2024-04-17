@@ -1,6 +1,10 @@
 import { Box, Button, FormControlLabel, Grid, TextField } from '@mui/material'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { setActiveStep } from '../store/reducers/stepperReducer'
+import { useAppDispatch } from '../store/configStore'
+import { setUser } from '../store/reducers/userReducer'
+import { useNavigate } from 'react-router-dom'
 
 type FormDataType = {
   name: string
@@ -17,9 +21,12 @@ const defaultValues = {
 export const AuthForm = () => {
   const methods = useForm<FormDataType>({ defaultValues })
   const { register, handleSubmit } = methods
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const handleStartTest = (formData: FormDataType) => {
-    console.log(formData)
+    dispatch(setUser(formData))
+    navigate('/questions')
   }
 
   return (
