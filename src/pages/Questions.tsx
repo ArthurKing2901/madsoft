@@ -1,6 +1,6 @@
 import { Button, Grid } from '@mui/material'
-import { Stepper } from './Stepper'
-import { QuestionCard } from './QuestionCard'
+import { Stepper } from '../components/Stepper'
+import { QuestionCard } from '../components/QuestionCard'
 import { FormProvider, useForm } from 'react-hook-form'
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../store/configStore'
