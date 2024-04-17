@@ -23,7 +23,9 @@ export const App = () => {
   const { handleSubmit } = methods
 
   const handleSetUser = (formData: any) => {
-    dispatch(setActiveStep({ activeStep: activeStep + 1 }))
+    if (activeStep < questions.length - 1) {
+      dispatch(setActiveStep({ activeStep: activeStep + 1 }))
+    }
     console.log(formData)
   }
 
