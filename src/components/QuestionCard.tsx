@@ -13,10 +13,10 @@ import {
 import { useAppSelector } from '../store/configStore'
 import { getActiveStep } from '../store/selectors/stepperSelector'
 import { questions } from '../mokData'
-import { useFormContext } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 
 export const QuestionCard = () => {
-  const { register } = useFormContext()
+  const { register, control } = useFormContext()
   const activeStep = useAppSelector(getActiveStep)
   const currentQuestion = questions[activeStep]
   const questionType = currentQuestion.type
@@ -32,30 +32,35 @@ export const QuestionCard = () => {
           {currentQuestion.answers.map((answer) => (
             <div key={answer}>
               {questionType === 'RADIO' && (
-                <RadioGroup name="radio-buttons-group">
-                  <FormControlLabel
-                    {...register('radio')}
-                    value={answer}
-                    control={<Radio />}
-                    label={answer}
-                  />
-                </RadioGroup>
+                <Controller
+                  name="answer"
+                  render={({ field }) => (
+                    <RadioGroup {...field}>
+                      <FormControlLabel
+                        value={answer}
+                        control={<Radio />}
+                        label={answer}
+                      />
+                    </RadioGroup>
+                  )}
+                  control={control}
+                />
               )}
 
               {questionType === 'CHECKBOX' && (
                 <FormControlLabel
-                  {...register('checkbox')}
                   value={answer}
-                  control={<Checkbox name={'checkbox'} />}
+                  control={<Checkbox />}
                   label={answer}
+                  {...register('answer')}
                 />
               )}
 
               {questionType === 'TEXT' && (
                 <FormControlLabel
-                  {...register('text')}
                   control={<TextField variant="outlined" />}
                   label={answer}
+                  {...register('answer')}
                 />
               )}
             </div>
