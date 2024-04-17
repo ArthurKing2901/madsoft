@@ -6,17 +6,28 @@ import {
   stepperReducer,
   StepperType,
 } from './reducers/stepperReducer'
+import {
+  initialResultState,
+  resultReducer,
+  ResultType,
+} from './reducers/resultReducer'
 
-export type RootStateType = { user: UserType; stepper: StepperType }
+export type RootStateType = {
+  user: UserType
+  stepper: StepperType
+  result: ResultType[]
+}
 
 const rootInitialState: RootStateType = {
   user: { ...initialUserState },
   stepper: { ...initialStepperState },
+  result: [...initialResultState],
 }
 
 const rootReducer = combineReducers({
   user: userReducer.reducer,
   stepper: stepperReducer.reducer,
+  result: resultReducer.reducer,
 })
 export const store = configureStore({
   reducer: rootReducer,

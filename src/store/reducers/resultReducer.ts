@@ -7,7 +7,7 @@ export type ResultType = {
 
 export const initialResultState: ResultType[] = []
 
-export const userReducer = createSlice({
+export const resultReducer = createSlice({
   name: 'result',
   initialState: initialResultState,
   reducers: {
@@ -17,4 +17,4 @@ export const userReducer = createSlice({
   },
 })
 
-export const { setResult } = userReducer.actions
+export const { setResult } = resultReducer.actions

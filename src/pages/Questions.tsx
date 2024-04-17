@@ -10,6 +10,7 @@ import { setActiveStep } from '../store/reducers/stepperReducer'
 import { getUser } from '../store/selectors/userSelector'
 import { setResult } from '../store/reducers/resultReducer'
 import { useNavigate } from 'react-router-dom'
+import { DisplayUserName } from '../components/DisplayUserName'
 
 type FormDataType = {
   answer: string | string[]
@@ -25,7 +26,7 @@ export const Questions = () => {
   const methods = useForm<FormDataType>({ defaultValues })
   const { handleSubmit } = methods
   const currentQuestion = questions[activeStep]
-  const user = useAppSelector(getUser)
+
   const navigate = useNavigate()
 
   const handleSetUser = (formData: FormDataType) => {
@@ -49,9 +50,7 @@ export const Questions = () => {
     <FormProvider {...methods}>
       <Grid container spacing={2} direction="column" alignItems="center">
         <Grid item>
-          <Typography variant="h5">
-            {user.surname} {user.name}
-          </Typography>
+          <DisplayUserName />
         </Grid>
       </Grid>
       <Grid container spacing={2} direction="column" alignItems="center">
