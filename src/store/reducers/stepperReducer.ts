@@ -9,7 +9,7 @@ export const initialStepperState: StepperType = {
 }
 
 export const stepperReducer = createSlice({
-  name: 'user',
+  name: 'stepper',
   initialState: initialStepperState,
   reducers: {
     setActiveStep(state: StepperType, action: PayloadAction<StepperType>) {

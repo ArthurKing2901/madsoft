@@ -29,11 +29,12 @@ export const QuestionCard = () => {
         </Typography>
 
         <FormControl>
-          {currentQuestion.answers.map((answer) => (
-            <div key={answer}>
+          {currentQuestion.answers.map((answer, index) => (
+            <div key={index}>
               {questionType === 'RADIO' && (
                 <Controller
                   name="answer"
+                  control={control}
                   render={({ field }) => (
                     <RadioGroup {...field}>
                       <FormControlLabel
@@ -43,7 +44,6 @@ export const QuestionCard = () => {
                       />
                     </RadioGroup>
                   )}
-                  control={control}
                 />
               )}
 
@@ -52,7 +52,7 @@ export const QuestionCard = () => {
                   value={answer}
                   control={<Checkbox />}
                   label={answer}
-                  {...register('answer')}
+                  {...register('answer', { required: true })}
                 />
               )}
 
@@ -60,7 +60,7 @@ export const QuestionCard = () => {
                 <FormControlLabel
                   control={<TextField variant="outlined" />}
                   label={answer}
-                  {...register('answer')}
+                  {...register('answer', { required: true })}
                 />
               )}
             </div>

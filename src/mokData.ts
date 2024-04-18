@@ -6,6 +6,7 @@ export type Question = {
   answers: string[]
 }
 
+//Массив с вопросами разных видовнфк
 export const questions: Question[] = [
   {
     type: 'CHECKBOX',
@@ -27,4 +28,5 @@ export const questions: Question[] = [
   },
 ]
 
-export const isTimer = true
+export const isTimer = true // Наличие таймера в тесте
+export const timerDuration = 70 // Длительность теста в секундах

@@ -11,23 +11,31 @@ import {
   resultReducer,
   ResultType,
 } from './reducers/resultReducer'
+import {
+  initialTimerState,
+  timerReducer,
+  TimerType,
+} from './reducers/timerReducer'
 
 export type RootStateType = {
-  user: UserType
-  stepper: StepperType
+  isTimeOver: TimerType
   result: ResultType[]
+  stepper: StepperType
+  user: UserType
 }
 
 const rootInitialState: RootStateType = {
-  user: { ...initialUserState },
-  stepper: { ...initialStepperState },
+  isTimeOver: initialTimerState,
   result: [...initialResultState],
+  stepper: { ...initialStepperState },
+  user: { ...initialUserState },
 }
 
 const rootReducer = combineReducers({
-  user: userReducer.reducer,
-  stepper: stepperReducer.reducer,
+  isTimeOver: timerReducer.reducer,
   result: resultReducer.reducer,
+  stepper: stepperReducer.reducer,
+  user: userReducer.reducer,
 })
 export const store = configureStore({
   reducer: rootReducer,

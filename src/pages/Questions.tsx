@@ -1,17 +1,16 @@
-import { Button, Grid, Typography } from '@mui/material'
+import React from 'react'
+import { Button, Grid } from '@mui/material'
 import { Stepper } from '../components/Stepper'
 import { QuestionCard } from '../components/QuestionCard'
 import { FormProvider, useForm } from 'react-hook-form'
-import React from 'react'
 import { useAppDispatch, useAppSelector } from '../store/configStore'
 import { getActiveStep } from '../store/selectors/stepperSelector'
-import { isTimer, questions } from '../mokData'
+import { isTimer, questions, timerDuration } from '../mokData'
 import { setActiveStep } from '../store/reducers/stepperReducer'
-import { getUser } from '../store/selectors/userSelector'
 import { setResult } from '../store/reducers/resultReducer'
 import { useNavigate } from 'react-router-dom'
 import { DisplayUserName } from '../components/DisplayUserName'
-import { Timer } from '../components/Timer'
+import { CountdownTimer } from '../components/CountdownTimer'
 
 type FormDataType = {
   answer: string | string[]
@@ -24,13 +23,22 @@ const defaultValues: FormDataType = {
 export const Questions = () => {
   const activeStep = useAppSelector(getActiveStep)
   const dispatch = useAppDispatch()
-  const methods = useForm<FormDataType>({ defaultValues })
-  const { handleSubmit } = methods
+  const methods = useForm<FormDataType>({
+    defaultValues,
+  })
+  const { handleSubmit, formState } = methods
+  const { isValid } = formState
   const currentQuestion = questions[activeStep]
 
   const navigate = useNavigate()
 
   const handleSetUser = (formData: FormDataType) => {
+    if (isValid && !formState.isValid) {
+      // Если форма отправлена, но не валидна (некоторые обязательные поля не заполнены),
+      // то не позволяйте переходить к следующему вопросу
+      return
+    }
+
     if (activeStep < questions.length - 1) {
       dispatch(setActiveStep({ activeStep: activeStep + 1 }))
     }
@@ -55,7 +63,7 @@ export const Questions = () => {
         </Grid>
         {isTimer && (
           <Grid item>
-            <Timer />
+            <CountdownTimer />
           </Grid>
         )}
       </Grid>
