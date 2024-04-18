@@ -26,3 +26,5 @@ export const questions: Question[] = [
     answers: ['Введите ответ'],
   },
 ]
+
+export const isTimer = true

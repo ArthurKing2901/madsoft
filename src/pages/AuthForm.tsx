@@ -26,6 +26,7 @@ export const AuthForm = () => {
 
   const handleStartTest = (formData: FormDataType) => {
     dispatch(setUser(formData))
+
     navigate('/questions')
   }
 

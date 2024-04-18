@@ -11,11 +11,15 @@ export const Result = () => {
   return (
     <Box>
       <DisplayUserName />
-      {result.map(({ question, answer }) => (
-        <Typography key={question} variant="h5">
-          {question}: {answer}
-        </Typography>
-      ))}
+      {result.map(({ question, answer }) => {
+        const displayAnswer = Array.isArray(answer) ? answer.join(', ') : answer
+
+        return (
+          <Typography key={question} variant="h5">
+            {question}: {displayAnswer}
+          </Typography>
+        )
+      })}
     </Box>
   )
 }
