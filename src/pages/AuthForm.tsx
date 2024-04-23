@@ -1,10 +1,13 @@
-import { Box, Button, FormControlLabel, Grid, TextField } from '@mui/material'
 import React from 'react'
+import { Box, Button, FormControlLabel, Grid, TextField } from '@mui/material'
 import { FormProvider, useForm } from 'react-hook-form'
-import { setActiveStep } from '../store/reducers/stepperReducer'
+import { useNavigate } from 'react-router-dom'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+
 import { useAppDispatch } from '../store/configStore'
 import { setUser } from '../store/reducers/userReducer'
-import { useNavigate } from 'react-router-dom'
+import { FormInput } from '../components/FormInput'
 
 type FormDataType = {
   name: string
@@ -18,9 +21,21 @@ const defaultValues = {
   email: '',
 }
 
+const schema = yup
+  .object()
+  .shape({
+    name: yup.string().required('Это поле обязательно для заполнения'),
+    surname: yup.string().required('Это поле обязательно для заполнения'),
+    email: yup.string().required('Это поле обязательно для заполнения'),
+  })
+  .required()
+
 export const AuthForm = () => {
-  const methods = useForm<FormDataType>({ defaultValues })
-  const { register, handleSubmit } = methods
+  const methods = useForm<FormDataType>({
+    defaultValues,
+    resolver: yupResolver(schema),
+  })
+  const { handleSubmit } = methods
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -40,26 +55,12 @@ export const AuthForm = () => {
           alignItems={'center'}
         >
           <FormProvider {...methods}>
-            <TextField
-              variant="outlined"
-              {...register('name', { required: true })}
-              required
-              label="Введите Имя"
-            />
+            <FormInput name="name" label="Введите Имя" />
 
-            <TextField
-              variant="outlined"
-              {...register('surname', { required: true })}
-              required
-              label="Введите Фамилию"
-            />
+            <FormInput name="surname" label="Введите Фамилию" />
 
-            <TextField
-              variant="outlined"
-              {...register('email', { required: true })}
-              required
-              label="Введите Почту"
-            />
+            <FormInput name="email" label="Введите Почту" />
+
             <Button variant="contained" onClick={handleSubmit(handleStartTest)}>
               Начать тест
             </Button>

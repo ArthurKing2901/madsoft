@@ -1,5 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+
 import { initialUserState, userReducer, UserType } from './reducers/userReducer'
 import {
   initialStepperState,
@@ -24,7 +27,7 @@ export type RootStateType = {
   user: UserType
 }
 
-const rootInitialState: RootStateType = {
+export const rootInitialState: RootStateType = {
   isTimeOver: initialTimerState,
   result: [...initialResultState],
   stepper: { ...initialStepperState },
@@ -37,10 +40,23 @@ const rootReducer = combineReducers({
   stepper: stepperReducer.reducer,
   user: userReducer.reducer,
 })
+
+const persistConfig = {
+  key: 'rootPersist',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 export const store = configureStore({
-  reducer: rootReducer,
-  preloadedState: rootInitialState,
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
+
+export const persistor = persistStore(store)
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
